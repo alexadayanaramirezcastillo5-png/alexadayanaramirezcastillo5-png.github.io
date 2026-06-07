@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REMS Logística V2</title>
+<style>
+body{margin:0;font-family:Segoe UI,Arial;background:#f2f2f2}
+.sidebar{position:fixed;left:0;top:0;width:240px;height:100%;background:#1f1f1f;color:white;overflow:auto}
+.sidebar h2{text-align:center;color:#ff7a00}
+.sidebar button{width:90%;margin:5px 5%;padding:10px;border:none;background:#ff7a00;color:#fff;border-radius:8px;cursor:pointer}
+.main{margin-left:240px}
+.hero{background:linear-gradient(90deg,#ff7a00,#ff9f43);padding:30px;color:white;text-align:center}
+.card{background:white;margin:15px;padding:15px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.stat{background:#222;color:white;padding:20px;border-radius:10px;text-align:center}
+input,select,textarea{width:100%;padding:8px;margin:4px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ddd;padding:8px}
+th{background:#ff7a00;color:white}
+.hidden{display:none}
+.action{background:#ff7a00;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+img.banner{width:100%;max-height:300px;object-fit:cover}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+<h2>🚚 REMS</h2>
+<button onclick="show('inicio')">Inicio</button>
+<button onclick="show('dashboard')">Dashboard</button>
+<button onclick="show('clientes')">Clientes</button>
+<button onclick="show('envios')">Envíos</button>
+<button onclick="show('vehiculos')">Vehículos</button>
+<button onclick="show('operadores')">Operadores</button>
+<button onclick="show('inventario')">Inventario</button>
+<button onclick="show('rutas')">Rutas</button>
+<button onclick="show('reportes')">Reportes</button>
+<button onclick="show('contacto')">Contacto</button>
+</div>
+
+<div class="main">
+
+<section id="inicio">
+<div class="hero">
+<h1>REMS Logística V2</h1>
+<p>Sistema Integral Administrativo</p>
+</div>
+
+<img class="banner" src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=1200&auto=format&fit=crop">
+
+<div class="card"><h2>Misión</h2><p>Brindar servicios logísticos eficientes y seguros.</p></div>
+<div class="card"><h2>Visión</h2><p>Ser líderes en logística nacional.</p></div>
+<div class="card"><h2>Valores</h2><p>Compromiso, innovación, calidad y responsabilidad.</p></div>
+<div class="card"><h2>Servicios</h2><ul><li>Transporte</li><li>Distribución</li><li>Inventarios</li><li>Rastreo</li><li>Almacenaje</li></ul></div>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="grid">
+<div class="stat"><h2 id="sClientes">0</h2><p>Clientes</p></div>
+<div class="stat"><h2 id="sEnvios">0</h2><p>Envíos</p></div>
+<div class="stat"><h2 id="sVehiculos">0</h2><p>Vehículos</p></div>
+<div class="stat"><h2 id="sOperadores">0</h2><p>Operadores</p></div>
+<div class="stat"><h2 id="sInventario">0</h2><p>Productos</p></div>
+</div>
+</section>
+
+<section id="clientes" class="hidden">
+<div class="card">
+<h2>Clientes</h2>
+<input id="cliente" placeholder="Nombre">
+<input id="telefono" placeholder="Teléfono">
+<input id="correo" placeholder="Correo">
+<button class="action" onclick="addCliente()">Agregar</button>
+<table><thead><tr><th>Nombre</th><th>Teléfono</th><th>Correo</th><th>Acción</th></tr></thead><tbody id="tClientes"></tbody></table>
+</div>
+</section>
+
+<section id="envios" class="hidden">
+<div class="card">
+<h2>Envíos</h2>
+<input id="folio" placeholder="Folio">
+<input id="origen" placeholder="Origen">
+<input id="destino" placeholder="Destino">
+<select id="estado"><option>Pendiente</option><option>En Ruta</option><option>Entregado</option></select>
+<button class="action" onclick="addEnvio()">Agregar</button>
+<table><thead><tr><th>Folio</th><th>Origen</th><th>Destino</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="tEnvios"></tbody></table>
+</div>
+</section>
+
+<section id="vehiculos" class="hidden">
+<div class="card">
+<h2>Vehículos</h2>
+<input id="placa" placeholder="Placas">
+<input id="modelo" placeholder="Modelo">
+<button class="action" onclick="addVehiculo()">Agregar</button>
+<table><tbody id="tVehiculos"></tbody></table>
+</div>
+</section>
+
+<section id="operadores" class="hidden">
+<div class="card">
+<h2>Operadores</h2>
+<input id="operador" placeholder="Nombre">
+<input id="licencia" placeholder="Licencia">
+<button class="action" onclick="addOperador()">Agregar</button>
+<table><tbody id="tOperadores"></tbody></table>
+</div>
+</section>
+
+<section id="inventario" class="hidden">
+<div class="card">
+<h2>Inventario</h2>
+<input id="producto" placeholder="Producto">
+<input id="cantidad" type="number" placeholder="Cantidad">
+<button class="action" onclick="addProducto()">Agregar</button>
+<table><tbody id="tInventario"></tbody></table>
+</div>
+</section>
+
+<section id="rutas" class="hidden">
+<div class="card">
+<h2>Rutas Frecuentes</h2>
+<ul>
+<li>Hermosillo → Nogales</li>
+<li>Nogales → Agua Prieta</li>
+<li>Hermosillo → Ciudad Obregón</li>
+<li>Guaymas → Nogales</li>
+<li>Hermosillo → Mexicali</li>
+</ul>
+</div>
+</section>
+
+<section id="reportes" class="hidden">
+<div class="card">
+<h2>Reportes</h2>
+<p>Resumen automático de registros almacenados.</p>
+<div id="resumen"></div>
+</div>
+</section>
+
+<section id="contacto" class="hidden">
+<div class="card">
+<h2>Contacto</h2>
+<p>📞 631-000-0000</p>
+<p>📧 contacto@remslogistica.com</p>
+</div>
+</section>
+
+</div>
+
+<script>
+const ids=['inicio','dashboard','clientes','envios','vehiculos','operadores','inventario','rutas','reportes','contacto'];
+function show(id){ids.forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
+
+let clientes=JSON.parse(localStorage.getItem('v2clientes')||'[]');
+let envios=JSON.parse(localStorage.getItem('v2envios')||'[]');
+let vehiculos=JSON.parse(localStorage.getItem('v2vehiculos')||'[]');
+let operadores=JSON.parse(localStorage.getItem('v2operadores')||'[]');
+let inventario=JSON.parse(localStorage.getItem('v2inventario')||'[]');
+
+function save(){
+localStorage.setItem('v2clientes',JSON.stringify(clientes));
+localStorage.setItem('v2envios',JSON.stringify(envios));
+localStorage.setItem('v2vehiculos',JSON.stringify(vehiculos));
+localStorage.setItem('v2operadores',JSON.stringify(operadores));
+localStorage.setItem('v2inventario',JSON.stringify(inventario));
+render();
+}
+
+function addCliente(){clientes.push({n:cliente.value,t:telefono.value,c:correo.value});save();}
+function addEnvio(){envios.push({f:folio.value,o:origen.value,d:destino.value,e:estado.value});save();}
+function addVehiculo(){vehiculos.push({p:placa.value,m:modelo.value});save();}
+function addOperador(){operadores.push({n:operador.value,l:licencia.value});save();}
+function addProducto(){inventario.push({p:producto.value,c:cantidad.value});save();}
+
+function render(){
+tClientes.innerHTML=clientes.map((x,i)=>`<tr><td>${x.n}</td><td>${x.t}</td><td>${x.c}</td><td><button onclick="clientes.splice(${i},1);save()">Eliminar</button></td></tr>`).join('');
+tEnvios.innerHTML=envios.map((x,i)=>`<tr><td>${x.f}</td><td>${x.o}</td><td>${x.d}</td><td>${x.e}</td><td><button onclick="envios.splice(${i},1);save()">Eliminar</button></td></tr>`).join('');
+tVehiculos.innerHTML=vehiculos.map((x,i)=>`<tr><td>${x.p}</td><td>${x.m}</td><td><button onclick="vehiculos.splice(${i},1);save()">Eliminar</button></td></tr>`).join('');
+tOperadores.innerHTML=operadores.map((x,i)=>`<tr><td>${x.n}</td><td>${x.l}</td><td><button onclick="operadores.splice(${i},1);save()">Eliminar</button></td></tr>`).join('');
+tInventario.innerHTML=inventario.map((x,i)=>`<tr><td>${x.p}</td><td>${x.c}</td><td><button onclick="inventario.splice(${i},1);save()">Eliminar</button></td></tr>`).join('');
+
+sClientes.textContent=clientes.length;
+sEnvios.textContent=envios.length;
+sVehiculos.textContent=vehiculos.length;
+sOperadores.textContent=operadores.length;
+sInventario.textContent=inventario.length;
+
+resumen.innerHTML=`<b>Clientes:</b> ${clientes.length}<br><b>Envíos:</b> ${envios.length}<br><b>Vehículos:</b> ${vehiculos.length}<br><b>Operadores:</b> ${operadores.length}<br><b>Inventario:</b> ${inventario.length}`;
+}
+render();
+</script>
+</body>
+</html>
